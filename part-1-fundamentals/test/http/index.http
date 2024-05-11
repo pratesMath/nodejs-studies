@@ -1,0 +1,5 @@
+### Buscando usuários
+GET http://localhost:4040/users HTTP/1.1
+
+### Criando usuários
+POST http://localhost:4040/users HTTP/1.1
