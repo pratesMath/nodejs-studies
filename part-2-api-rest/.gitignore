@@ -1,0 +1,14 @@
+# dependencies
+node_modules
+
+# database
+db/*.db
+
+# environment
+.env
+.env.test
+
+# folder's name for production environment
+build
+dist
+prod

@@ -1,28 +1,29 @@
-import crypto from "node:crypto";
 import http from "node:http";
+import { json } from "./middlewares/json.js";
+import { routes } from "./routes.js";
+import { extractQueryParams } from "./utils/extract-query-params.js";
 
-const users = [];
+const server = http.createServer(async (req, res) => {
+  const { method, url } = req;
 
-const server = http.createServer((request, response) => {
-  const { method, url } = request;
+  await json(req, res);
 
-  if (method === "GET" && url === "/users") {
-    return response
-      .setHeader("Content-type", "application/json")
-      .writeHead(200)
-      .end(JSON.stringify(users));
+  const route = routes.find((route) => {
+    return route.method === method && route.path.test(url);
+  });
+
+  if (route) {
+    const routeParams = req.url.match(route.path);
+
+    const { query, ...params } = routeParams.groups;
+
+    req.params = params;
+    req.query = query ? extractQueryParams(query) : {};
+
+    return route.handler(req, res);
   }
-  if (method === "POST" && url === "/users") {
-    users.push({
-      id: crypto.randomUUID(),
-      name: "John Doe",
-      email: "john.doe@email.com",
-    });
 
-    return response.writeHead(201).end("User created successfully");
-  }
-
-  return response.writeHead(404).end("Not Found");
+  return res.writeHead(404).end("Not Found");
 });
 
-server.listen(4040);
+server.listen(3333);

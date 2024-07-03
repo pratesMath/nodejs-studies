@@ -1,0 +1,27 @@
+### Buscando usuários
+GET http://localhost:3333/users
+
+### Criando usuários
+POST http://localhost:3333/users
+Content-Type: application/json
+
+{
+  "name": "John Doe", 
+  "email": "john.doe@email.com"
+}
+
+### Deletando usuário
+DELETE http://localhost:3333/users/50ea0d56-153c-42c7-9c2a-78b917c87d82
+Content-Type: application/json
+
+### Atualizando usuário
+PUT http://localhost:3333/users/c48da8e1-8c2a-4d50-bf13-5dc6dc04034a
+Content-Type: application/json
+
+{
+  "name": "John Doe", 
+  "email": "john.doe.new@email.com"
+}
+
+### Buscando usuários
+GET http://localhost:3333/users?name=matheus

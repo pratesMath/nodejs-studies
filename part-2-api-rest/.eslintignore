@@ -1,0 +1,5 @@
+node_modules
+# folder's name for production environment
+build
+dist
+prod
